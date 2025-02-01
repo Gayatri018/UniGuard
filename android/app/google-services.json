@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "993667215602",
+    "project_id": "uniguard-app",
+    "storage_bucket": "uniguard-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993667215602:android:70c058fba28f2d972f206b",
+        "android_client_info": {
+          "package_name": "com.gdg.uniguard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAMgoLQXg3I6OPlXztVGnoU4gyUUzZhEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
