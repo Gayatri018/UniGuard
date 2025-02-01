@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 #Add project details here
 =======
 # uniguard
