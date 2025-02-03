@@ -51,23 +51,35 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('UniGuard'),
-      ),
+      backgroundColor: Colors.green[100],
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(
+              height: 250,
+              width: 250,
+              child: Image.asset('assets/images/UniGuard_logo.png'),
+            ),
             Text(
               'Welcome to UniGuard!',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: _signUpAnonymously,
-              child: Text('Sign Up Anonymously'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green[800],
+                padding: EdgeInsets.all(15)
+              ),
+              child: Text('Sign Up Anonymously',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20
+                ),
+              ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             TextButton(
               onPressed: () {
                 // Navigate to LoginPage when the link is clicked
@@ -76,7 +88,7 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Text(
                 'Have a token? Login here',
                 style: TextStyle(
-                  color: Colors.blue,
+                  color: Colors.teal[800],
                   fontSize: 16,
                 ),
               ),
