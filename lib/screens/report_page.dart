@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uniguard/services/database_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 void main() => runApp(MaterialApp(
@@ -16,6 +17,8 @@ class ReportFrom extends StatefulWidget {
 }
 
 class _ReportFormState extends State<ReportFrom> {
+
+  Future<SharedPreferences> prefs = SharedPreferences.getInstance();
 
   final _dbservice = Database();
 
