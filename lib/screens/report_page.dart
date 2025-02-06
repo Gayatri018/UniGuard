@@ -1,7 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as gm;
 import 'package:uniguard/services/database_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ReportForm extends StatefulWidget {
 
@@ -31,6 +32,7 @@ class _ReportFormState extends State<ReportForm> {
     setState(() {
       selectedLocation = position;
     });
+    log(selectedLocation.toString());
   }
 
 
@@ -60,16 +62,21 @@ class _ReportFormState extends State<ReportForm> {
                         border: OutlineInputBorder()),
                   ),
                   SizedBox(height: 20),
-                  gm.GoogleMap(
-                    initialCameraPosition: const gm.CameraPosition(
-                      target: gm.LatLng(28.7041, 77.1025), // Default to New Delhi
-                      zoom: 12,
+                  SizedBox(
+                    height: 500,
+                    width: 500,
+                    child: gm.GoogleMap(
+                      initialCameraPosition: const gm.CameraPosition(
+                        target: gm.LatLng(28.7041, 77.1025), // Default to New Delhi
+                        zoom: 12,
+                      ),
+                      onTap: _onMapTapped,
+                      markers: selectedLocation != null
+                          ? {gm.Marker(markerId: const gm.MarkerId("selected"), position: selectedLocation!)}
+                          : {},
                     ),
-                    onTap: _onMapTapped,
-                    markers: selectedLocation != null
-                        ? {gm.Marker(markerId: const gm.MarkerId("selected"), position: selectedLocation!)}
-                        : {},
                   ),
+                  SizedBox(height: 20,),
                   TextField(
                     controller: _landmark,
                     decoration: const InputDecoration(
