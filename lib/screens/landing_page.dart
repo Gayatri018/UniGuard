@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:uniguard/screens/report_page.dart';
 
 class LandingPage extends StatelessWidget {
+
   final String token;
 
   LandingPage({required this.token});  
@@ -36,6 +38,14 @@ class LandingPage extends StatelessWidget {
               },
               child: Text('Copy to Clipboard'),
             ),
+            SizedBox(height: 20,),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => ReportForm(token: token)),
+                  );
+            }, child: Text('Report'))
           ],
         ),
       ),

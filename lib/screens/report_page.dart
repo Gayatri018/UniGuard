@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart' as gm;
 import 'package:uniguard/services/database_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+class ReportForm extends StatefulWidget {
 
-void main() => runApp(MaterialApp(
-  home: ReportFrom(),
-));
+  final String token;
 
-class ReportFrom extends StatefulWidget {
-
-
+  ReportForm({super.key, required this.token});
 
   @override
   _ReportFormState createState() => _ReportFormState();
 
 }
 
-class _ReportFormState extends State<ReportFrom> {
+class _ReportFormState extends State<ReportForm> {
 
-  Future<SharedPreferences> prefs = SharedPreferences.getInstance();
+
 
   final _dbservice = Database();
-
-  final String token = '';
+  gm.LatLng? selectedLocation;
   final GlobalKey<FormState> _FormGlobalKey = GlobalKey<FormState>();
   final TextEditingController _title = TextEditingController();
   final TextEditingController _description = TextEditingController();
@@ -30,6 +27,11 @@ class _ReportFormState extends State<ReportFrom> {
   final TextEditingController _priority = TextEditingController();
   final TextEditingController _cords = TextEditingController();
 
+  void _onMapTapped(gm.LatLng position) {
+    setState(() {
+      selectedLocation = position;
+    });
+  }
 
 
   // location pending
@@ -58,6 +60,16 @@ class _ReportFormState extends State<ReportFrom> {
                         border: OutlineInputBorder()),
                   ),
                   SizedBox(height: 20),
+                  gm.GoogleMap(
+                    initialCameraPosition: const gm.CameraPosition(
+                      target: gm.LatLng(28.7041, 77.1025), // Default to New Delhi
+                      zoom: 12,
+                    ),
+                    onTap: _onMapTapped,
+                    markers: selectedLocation != null
+                        ? {gm.Marker(markerId: const gm.MarkerId("selected"), position: selectedLocation!)}
+                        : {},
+                  ),
                   TextField(
                     controller: _landmark,
                     decoration: const InputDecoration(
@@ -66,7 +78,7 @@ class _ReportFormState extends State<ReportFrom> {
                   SizedBox(height: 20),
 
                   FilledButton(onPressed: () {
-                    final report = Report(title: _title.text, description: _description.text, landmark: _landmark.text, priority: _priority.text, cords: _cords.text);
+                    final report = Report(unique_token: widget.token, title: _title.text, description: _description.text, landmark: _landmark.text, priority: _priority.text, cords: _cords.text);
                     _dbservice.report_submit(report);
                   },
                       child: Text("Submit")),
@@ -77,15 +89,18 @@ class _ReportFormState extends State<ReportFrom> {
 }
 
 class Report {
+
+  final String unique_token;
   final String title;
   final String description;
   final String landmark;
   final String priority;
   final String cords;
 
-  Report({required this.title, required this.description, required this.landmark, required this.priority, required this.cords});
+  Report({required this.unique_token, required this.title, required this.description, required this.landmark, required this.priority, required this.cords});
 
   Map<String, dynamic> ReportToMap() => {
+    "unique_token": unique_token,
     "title": title,
     "description": description,
     "landmark": landmark,

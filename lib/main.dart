@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'screens/loading_page.dart';
 import 'screens/login_page.dart';
 import 'screens/signup_page.dart';
+import 'screens/report_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
