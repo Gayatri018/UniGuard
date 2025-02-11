@@ -8,7 +8,7 @@ class Database {
 
   report_submit(Report report) {
     try{
-      _fire.collection("reports").add(report.ReportToMap());
+      _fire.collection("reports").add(report.toMap());
     }catch(e){
       log( e.toString() as num );
     }
