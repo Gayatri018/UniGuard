@@ -14,7 +14,7 @@ class ReportForm extends StatefulWidget {
   _ReportFormState createState() => _ReportFormState();
 }
 
-enum Priority { high, medium, low }
+enum Priority { low, medium, high }
 
 enum Status { pending, resolved }
 
