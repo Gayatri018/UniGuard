@@ -131,8 +131,8 @@ class _AddSpeakerFormState extends State<AddSpeakerForm> {
                   onSaved: (value) => about = value!,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: "Profile Link (LinkedIn, etc.)"),
-                  validator: (value) => value!.isEmpty ? "Enter profile link" : null,
+                  decoration: InputDecoration(labelText: "Google Meet Link"),
+                  validator: (value) => value!.isEmpty ? "Enter Google Meet Link" : null,
                   onSaved: (value) => link = value!,
                 ),
                 SizedBox(height: 20),
