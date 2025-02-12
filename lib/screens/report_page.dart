@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as gm;
 import 'package:uniguard/services/database_service.dart';
@@ -13,7 +14,9 @@ class ReportForm extends StatefulWidget {
   _ReportFormState createState() => _ReportFormState();
 }
 
-enum Priority { high, medium, low }
+enum Priority { low, medium, high }
+
+enum Status { pending, resolved }
 
 class _ReportFormState extends State<ReportForm> {
   final _dbservice = Database();
@@ -25,6 +28,7 @@ class _ReportFormState extends State<ReportForm> {
   final TextEditingController _landmark = TextEditingController();
 
   Priority _priority = Priority.low; // default value of priority is low
+  Status _status = Status.pending;
 
   void _onMapTapped(gm.LatLng position) {
     setState(() {
@@ -145,15 +149,17 @@ class _ReportFormState extends State<ReportForm> {
                           }
 
                           final report = Report(
-                              unique_token: widget.token,
+                              anonUserId: widget.token,
                               title: _title.text,
                               description: _description.text,
                               landmark: _landmark.text,
                               priority: _priority.name,
+                              status: _status.name, // this page doesn't concern with changing of status
                               cords: {
                                 "latitude": selectedLocation!.latitude,
                                 "longitude": selectedLocation!.longitude
-                              });
+                              },
+                              time: FieldValue.serverTimestamp());
                           _dbservice.report_submit(report);
                         }
                       },
@@ -165,27 +171,33 @@ class _ReportFormState extends State<ReportForm> {
 }
 
 class Report {
-  final String unique_token;
+  final String anonUserId;
   final String title;
   final String description;
   final String landmark;
   final String priority;
   final Map<String, dynamic> cords;
+  final FieldValue time;
+  final String status;
 
   Report(
-      {required this.unique_token,
+      {required this.anonUserId,
       required this.title,
       required this.description,
       required this.landmark,
       required this.priority,
-      required this.cords});
+      required this.status,
+      required this.cords,
+      required this.time});
 
   Map<String, dynamic> toMap() => {
-        "unique_token": unique_token,
+        "anonUserId": anonUserId,
         "title": title,
         "description": description,
         "landmark": landmark,
         "priority": priority,
-        "cords": cords
+        "status":status,
+        "cords": cords,
+        "created_time": time,
       };
 }

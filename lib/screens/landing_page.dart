@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uniguard/screens/report_page.dart';
+import 'package:uniguard/screens/community.dart';
 
 class LandingPage extends StatelessWidget {
 
@@ -45,7 +46,15 @@ class LandingPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(builder: (context) => ReportForm(token: token)),
                   );
-            }, child: Text('Report'))
+            }, child: Text('Report')),
+            SizedBox(height: 20,),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddSpeakerForm(token: token)),
+                  );
+                }, child: Text('Community')),
           ],
         ),
       ),
