@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uniguard/screens/report_page.dart';
-import 'package:uniguard/screens/community.dart';
+import 'package:uniguard/admin/community.dart';
+
+import '../admin/report_details.dart';
+import '../admin/view_reports.dart';
 
 class LandingPage extends StatelessWidget {
 
@@ -55,6 +58,20 @@ class LandingPage extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => AddSpeakerForm(token: token)),
                   );
                 }, child: Text('Community')),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => ReportDetails(reportId: '', reportData: {},)),
+                  );
+                }, child: Text('ReportDetails')),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => ViewReports()),
+                  );
+                }, child: Text('View')),
           ],
         ),
       ),
