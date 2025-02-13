@@ -44,9 +44,9 @@ class SpeakerDetailsScreen extends StatelessWidget {
                       SizedBox(height: 10),
                       GestureDetector(
                         onTap: () async {
-                          final url = speaker['link'];
-                          if (await canLaunch(url)) {
-                            await launch(url);
+                          final url = Uri.parse(speaker['link']);
+                          if (await canLaunchUrl(url)) {
+                            await launchUrl(url);
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text("Could not open link")),
