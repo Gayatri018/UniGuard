@@ -6,7 +6,14 @@ class ViewReports extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Reports"), centerTitle: true),
+      appBar: AppBar(
+        title: Text("Reports"),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('reports').snapshots(),
         builder: (context, snapshot) {

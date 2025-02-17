@@ -5,6 +5,7 @@ import 'package:uniguard/admin/community.dart';
 
 import '../admin/report_details.dart';
 import '../admin/view_reports.dart';
+import 'my_community.dart';
 
 class LandingPage extends StatelessWidget {
 
@@ -55,16 +56,16 @@ class LandingPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => AddSpeakerForm(token: token)),
+                    MaterialPageRoute(builder: (context) => ViewReports()),
                   );
-                }, child: Text('Community')),
+                }, child: Text('myreports')),
             ElevatedButton(
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => ReportDetails(reportId: '', reportData: {},)),
+                    MaterialPageRoute(builder: (context) => SpeakerDetailsScreen()),
                   );
-                }, child: Text('ReportDetails')),
+                }, child: Text('community')),
             ElevatedButton(
                 onPressed: () {
                   Navigator.pushReplacement(
