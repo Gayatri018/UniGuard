@@ -53,7 +53,19 @@ class _LandingPageState extends State<LandingPage> {
           ),
         ],
       ),
-      appBar: AppBar(title: Text('Landing Page')),
+      appBar: AppBar(
+          leading: Icon(Icons.person_2_rounded, size: 60,),
+          title: Column(
+              children: [Text(
+                  "Welcome",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+                Text(
+                  "User",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                )],
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
