@@ -136,6 +136,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text("Welcome to UniGuard! Token: $token"));
+    return Center(child: ElevatedButton(onPressed: () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => AddSpeakerForm(token: token,)));
+    }, child: Text('something')));
   }
 }
