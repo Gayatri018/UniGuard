@@ -1,13 +1,14 @@
-// main.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'screens/loading_page.dart';
 import 'screens/login_page.dart';
 import 'screens/signup_page.dart';
+import 'screens/onboarding_screen.dart'; // Import onboarding screen
 
-
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: FirebaseOptions(
@@ -17,24 +18,32 @@ void main() async {
       messagingSenderId: '993667215602',
       projectId: 'uniguard-app',
       // storageBucket: 'YOUR_STORAGE_BUCKET',
+
     ),
   );
-  runApp(MyApp());
+
+  // Check if onboarding is completed
+  final prefs = await SharedPreferences.getInstance();
+  final showOnboarding = prefs.getBool('onboardingComplete') ?? false;
+
+  runApp(MyApp(showOnboarding: showOnboarding));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool showOnboarding;
+  const MyApp({Key? key, required this.showOnboarding}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(  // Use GetMaterialApp for GetX features
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',  // Set the initial route
-      routes: {
-        '/': (context) => LoadingPage(),
-        '/signup': (context) => SignUpPage(),
-        '/login': (context) => LoginPage(),
-      },
+      initialRoute: showOnboarding ? '/loading' : '/onboarding', // Decide initial screen
+      getPages: [
+        GetPage(name: '/onboarding', page: () => OnboardingScreen()),
+        GetPage(name: '/loading', page: () => LoadingPage()),
+        GetPage(name: '/signup', page: () => SignUpPage()),
+        GetPage(name: '/login', page: () => LoginPage()),
+      ],
     );
   }
 }
