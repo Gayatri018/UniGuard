@@ -160,7 +160,26 @@ class _ReportFormState extends State<ReportForm> {
                                 "longitude": selectedLocation!.longitude
                               },
                               time: FieldValue.serverTimestamp());
-                          _dbservice.report_submit(report);
+
+                          try {
+                            _dbservice.report_submit(report);
+
+                            // Clear input fields after successful submission
+                            _title.clear();
+                            _description.clear();
+                            _landmark.clear();
+                            setState(() {
+                              selectedLocation = null; // Remove map marker
+                              _priority = Priority.low; // Reset priority
+                            });
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Report submitted successfully! ✅")));
+
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Failed to submit report ❌")));
+                          }
                         }
                       },
                       child: Text("Submit")),

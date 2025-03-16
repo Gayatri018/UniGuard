@@ -24,6 +24,14 @@ class SpeakerDetailsScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               var speaker = speakers[index].data() as Map<String, dynamic>;
 
+              // Handle missing data safely
+              var imageUrl = speaker['imageUrl'] ?? '';
+              var name = speaker['name'] ?? 'Unknown Speaker';
+              var designation = speaker['designation'] ?? 'No designation';
+              var experience = speaker['experience'] ?? '0';
+              var about = speaker['about'] ?? 'No details available';
+              var link = speaker['link'] ?? '';
+
               return Card(
                 margin: EdgeInsets.all(10),
                 child: Padding(
@@ -31,33 +39,34 @@ class SpeakerDetailsScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      speaker['imageUrl'] != null && speaker['imageUrl']!.isNotEmpty
-                          ? Image.network(speaker['imageUrl'], height: 150, width: double.infinity, fit: BoxFit.cover)
+                      imageUrl.isNotEmpty
+                          ? Image.network(imageUrl, height: 150, width: double.infinity, fit: BoxFit.cover)
                           : SizedBox(height: 150, child: Center(child: Icon(Icons.image, size: 50))),
                       SizedBox(height: 10),
-                      Text(speaker['name'], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                      Text(speaker['designation'], style: TextStyle(fontSize: 16, color: Colors.grey)),
+                      Text(name, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text(designation, style: TextStyle(fontSize: 16, color: Colors.grey)),
                       SizedBox(height: 5),
-                      Text("Experience: ${speaker['experience']} years"),
+                      Text("Experience: $experience years"),
                       SizedBox(height: 5),
-                      Text(speaker['about']),
+                      Text(about),
                       SizedBox(height: 10),
-                      GestureDetector(
-                        onTap: () async {
-                          final url = Uri.parse(speaker['link']);
-                          if (await canLaunchUrl(url)) {
-                            await launchUrl(url);
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Could not open link")),
-                            );
-                          }
-                        },
-                        child: Text(
-                          "Join Google Meet",
-                          style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+                      if (link.isNotEmpty)
+                        GestureDetector(
+                          onTap: () async {
+                            final url = Uri.parse(link);
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(url, mode: LaunchMode.externalApplication);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Could not open link")),
+                              );
+                            }
+                          },
+                          child: Text(
+                            "Join Google Meet",
+                            style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+                          ),
                         ),
-                      ),
                     ],
                   ),
                 ),
