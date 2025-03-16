@@ -59,14 +59,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   onPressed: () async {
                     final prefs = await SharedPreferences.getInstance();
                     prefs.setBool('onboardingComplete', true);
-                    Navigator.pushReplacementNamed(context, '/login');
+                    Navigator.pushReplacementNamed(context, '/landing_page');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF8D0E02),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     minimumSize: Size(double.infinity, 50),
                   ),
-                  child: Text("Get Started"),
+                  child: Text(
+                      "Get Started",
+                      style: TextStyle(color: Color(0xFFFBF4F4)),
+
+                  ),
                 )
                     : SizedBox(),
               ],
