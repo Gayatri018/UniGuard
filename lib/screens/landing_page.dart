@@ -111,7 +111,8 @@ class _LandingPageState extends State<LandingPage> {
                       onPressed: () {
                         Clipboard.setData(ClipboardData(text: widget.token));
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Token copied to clipboard!')),
+                          const SnackBar(
+                              content: Text('Token copied to clipboard!')),
                         );
                       },
                       color: Colors.white,
@@ -136,8 +137,60 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: ElevatedButton(onPressed: () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => AddSpeakerForm(token: token,)));
-    }, child: Text('something')));
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          _buildSection(),
+          Divider(color: Colors.red),
+          _buildSection(),
+          Divider(color: Colors.red),
+          _buildSection(),
+          Divider(color: Colors.red),
+          _buildSection(),
+          Divider(color: Colors.red),
+          _buildSection(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSection() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 150,
+            height: 150,
+            color: Colors.red, // Placeholder for Image
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                    "Blog Title",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red,
+                    ),
+                ),
+                SizedBox(height: 10,),
+                Text(
+                  "This is a sample paragraph that describes the content in this section. It provides some textual information and can span multiple lines to ensure proper readability and structure in the layout.",
+                  style: TextStyle(color: Colors.black, fontSize: 14),
+                  softWrap: true, // Ensures text wraps properly
+                  overflow: TextOverflow.visible, // Ensures text isn't clipped
+                )
+              ]
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
