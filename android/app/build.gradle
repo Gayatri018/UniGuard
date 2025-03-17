@@ -6,6 +6,27 @@ plugins {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+// Function to load properties without using `Properties` class
+def getLocalProperty(key) {
+    def propertiesFile = rootProject.file("local.properties")
+    if (!propertiesFile.exists()) return ""
+
+    def properties = [:]
+    propertiesFile.eachLine { line ->
+        def (propertyKey, propertyValue) = line.tokenize('=')
+        if (propertyKey && propertyValue) {
+            properties[propertyKey.trim()] = propertyValue.trim()
+        }
+    }
+
+    return properties[key] ?: ""
+}
+
+// Retrieve API key
+def apiKey = getLocalProperty("API_KEY")
+
+
 android {
     namespace = "com.gdg.example.uniguard"
     compileSdk = flutter.compileSdkVersion
@@ -29,6 +50,8 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        manifestPlaceholders["API_KEY"] = apiKey
     }
 
     buildTypes {

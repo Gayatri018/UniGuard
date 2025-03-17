@@ -51,7 +51,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[100],
+      backgroundColor: Color(0xFFFBF4F4),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -59,7 +59,7 @@ class _SignUpPageState extends State<SignUpPage> {
             SizedBox(
               height: 250,
               width: 250,
-              child: Image.asset('assets/images/UniGuard_logo.png'),
+              child: Image.asset('assets/images/logo_final.png'),
             ),
             Text(
               'Welcome to UniGuard!',
@@ -69,7 +69,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ElevatedButton(
               onPressed: _signUpAnonymously,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green[800],
+                backgroundColor: Color(0xFF8D0E02),
                 padding: EdgeInsets.all(15)
               ),
               child: Text('Sign Up Anonymously',
@@ -88,7 +88,7 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Text(
                 'Have a token? Login here',
                 style: TextStyle(
-                  color: Colors.teal[800],
+                  color: Color(0xFF8D0E02),
                   fontSize: 16,
                 ),
               ),

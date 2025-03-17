@@ -42,7 +42,8 @@ class _ReportFormState extends State<ReportForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Report Form"), centerTitle: true),
+      backgroundColor: Color(0xFFFBF4F4),
+        appBar: AppBar(title: Text("Report Form"), centerTitle: true, backgroundColor: Color(0xFFFBF4F4),),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(20),
           child: Form(
@@ -52,6 +53,12 @@ class _ReportFormState extends State<ReportForm> {
                   TextFormField(
                     controller: _title,
                     decoration: const InputDecoration(
+                        floatingLabelStyle: TextStyle(
+                          color: Color(0xFF8D0E02),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF8D0E02))
+                        ),
                         label: Text("Report Title"),
                         border: OutlineInputBorder()),
                     validator: (value) =>
@@ -59,8 +66,15 @@ class _ReportFormState extends State<ReportForm> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+
                     controller: _description,
                     decoration: const InputDecoration(
+                        floatingLabelStyle: TextStyle(
+                          color: Color(0xFF8D0E02),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFF8D0E02))
+                        ),
                         label: Text("Report Description"),
                         border: OutlineInputBorder()),
                     validator: (value) =>
@@ -92,6 +106,12 @@ class _ReportFormState extends State<ReportForm> {
                   TextFormField(
                     controller: _landmark,
                     decoration: const InputDecoration(
+                        floatingLabelStyle: TextStyle(
+                          color: Color(0xFF8D0E02),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFF8D0E02))
+                        ),
                         label: Text("Landmark"), border: OutlineInputBorder()),
                     validator: (value) =>
                         value!.isEmpty ? "Landmark cannot be empty" : null,
@@ -105,6 +125,8 @@ class _ReportFormState extends State<ReportForm> {
 
                   // ✅ Step 2: Toggle Buttons for Priority Selection
                   ToggleButtons(
+                    selectedColor: Colors.white,
+                    fillColor: Color(0xFF8D0E02),
                     isSelected: [
                       _priority == Priority.low,
                       _priority == Priority.medium,
@@ -139,6 +161,7 @@ class _ReportFormState extends State<ReportForm> {
                   SizedBox(height: 20),
 
                   FilledButton(
+                      style: ButtonStyle(backgroundColor: WidgetStateProperty.all(Color(0xFF8D0E02)),),
                       onPressed: () {
                         if (_FormGlobalKey.currentState!.validate()) {
                           if (selectedLocation == null) {

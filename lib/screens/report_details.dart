@@ -26,26 +26,26 @@ class _ReportDetailsState extends State<ReportDetails> {
     );
   }
 
-  void _updateStatus(String newStatus) async {
-    await FirebaseFirestore.instance.collection('reports').doc(widget.reportId).update({
-      'status': newStatus,
-      'updated_time': FieldValue.serverTimestamp(),
-    });
-
-    setState(() {
-      _status = newStatus;
-    });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Status updated successfully")),
-    );
-  }
-
-  void _navigateToLocation() {
-    // Open Google Maps with the location
-    final String googleMapsUrl =
-        "https://www.google.com/maps/search/?api=1&query=${_reportLocation.latitude},${_reportLocation.longitude}";
-  }
+  // void _updateStatus(String newStatus) async {
+  //   await FirebaseFirestore.instance.collection('reports').doc(widget.reportId).update({
+  //     'status': newStatus,
+  //     'updated_time': FieldValue.serverTimestamp(),
+  //   });
+  //
+  //   setState(() {
+  //     _status = newStatus;
+  //   });
+  //
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(content: Text("Status updated successfully")),
+  //   );
+  // }
+  //
+  // void _navigateToLocation() {
+  //   // Open Google Maps with the location
+  //   final String googleMapsUrl =
+  //       "https://www.google.com/maps/search/?api=1&query=${_reportLocation.latitude},${_reportLocation.longitude}";
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -82,26 +82,26 @@ class _ReportDetailsState extends State<ReportDetails> {
                 },
               ),
             ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: _navigateToLocation,
-              child: Text("Navigate to Location"),
-            ),
-            SizedBox(height: 10),
-            DropdownButton<String>(
-              value: _status,
-              items: ["pending", "resolved"].map((String status) {
-                return DropdownMenuItem<String>(
-                  value: status,
-                  child: Text(status.toUpperCase()),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                if (newValue != null) {
-                  _updateStatus(newValue);
-                }
-              },
-            ),
+            // SizedBox(height: 10),
+            // ElevatedButton(
+            //   onPressed: _navigateToLocation,
+            //   child: Text("Navigate to Location"),
+            // ),
+            // SizedBox(height: 10),
+            // DropdownButton<String>(
+            //   value: _status,
+            //   items: ["pending", "resolved"].map((String status) {
+            //     return DropdownMenuItem<String>(
+            //       value: status,
+            //       child: Text(status.toUpperCase()),
+            //     );
+            //   }).toList(),
+            //   onChanged: (String? newValue) {
+            //     if (newValue != null) {
+            //       _updateStatus(newValue);
+            //     }
+            //   },
+            // ),
           ],
         ),
       ),

@@ -34,7 +34,7 @@ class SpeakerDetailsScreen extends StatelessWidget {
                 var link = speaker['link'] ?? '';
 
                 return Card(
-                  color: Colors.red[400],
+                  color: Color(0xFF8D0E02),
                   margin: EdgeInsets.all(10),
                   child: Padding(
                     padding: EdgeInsets.all(10),
