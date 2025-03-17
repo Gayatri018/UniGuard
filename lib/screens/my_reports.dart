@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
-import 'package:uniguard/admin/report_details.dart';
+import 'package:uniguard/screens/report_details.dart';
 
 class ViewReports extends StatefulWidget {
   @override
@@ -20,8 +20,9 @@ class _ViewReportsState extends State<ViewReports> {
 
   Future<void> _loadUserToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('unique_token');
     setState(() {
-      userToken = prefs.getString('user_token') ?? 'No token found';
+      userToken = token ?? 'No token found';
     });
   }
 
@@ -40,11 +41,6 @@ class _ViewReportsState extends State<ViewReports> {
       appBar: AppBar(title: Text("My Reports"), centerTitle: true),
       body: Column(
         children: [
-          SizedBox(height: 20),
-          CircleAvatar(
-            radius: 40,
-            backgroundImage: AssetImage('assets/profile_icon.png'), // Ensure this image exists in assets folder
-          ),
           SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -53,51 +49,54 @@ class _ViewReportsState extends State<ViewReports> {
                 userToken ?? "Loading token...",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              SizedBox(width: 10),
+              SizedBox(width: 2),
               IconButton(
-                icon: Icon(Icons.copy),
+                icon: Icon(Icons.copy, size: 16,),
                 onPressed: _copyToClipboard,
               ),
             ],
           ),
           SizedBox(height: 20),
           Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection('reports').snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return Center(child: Text("No reports found."));
-                }
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance.collection('reports').where('anonUserId', isEqualTo: userToken).snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return Center(child: Text("No reports found."));
+                  }
 
-                var reports = snapshot.data!.docs;
+                  var reports = snapshot.data!.docs;
 
-                return ListView.builder(
-                  itemCount: reports.length,
-                  itemBuilder: (context, index) {
-                    var report = reports[index].data() as Map<String, dynamic>;
+                  return ListView.builder(
+                    itemCount: reports.length,
+                    itemBuilder: (context, index) {
+                      var report = reports[index].data() as Map<String, dynamic>;
 
-                    return ListTile(
-                      title: Text(report['title']),
-                      subtitle: Text("Status: ${report['status']}"),
-                      trailing: Icon(Icons.arrow_forward),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ReportDetails(
-                              reportId: reports[index].id,
-                              reportData: report,
+                      return ListTile(
+                        title: Text(report['title']),
+                        subtitle: Text("Status: ${report['status']}"),
+                        trailing: Icon(Icons.arrow_forward),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ReportDetails(
+                                reportId: reports[index].id,
+                                reportData: report,
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                );
-              },
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ),
         ],

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uniguard/screens/report_page.dart';
-import 'package:uniguard/admin/community.dart';
-import '../admin/report_details.dart';
-import '../admin/view_reports.dart';
+// import 'package:uniguard/admin/community.dart';
+// import '../admin/report_details.dart';
+import 'package:uniguard/screens/my_reports.dart';
 import 'my_community.dart';
 
 class LandingPage extends StatefulWidget {
@@ -80,10 +80,6 @@ class _LandingPageState extends State<LandingPage> {
         automaticallyImplyLeading: false,
         title: Row(
           children: [
-            const CircleAvatar(
-              backgroundColor: Colors.white,
-              radius: 35,
-            ),
             const SizedBox(width: 20),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
