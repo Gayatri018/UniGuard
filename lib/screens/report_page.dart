@@ -113,7 +113,7 @@ class _ReportFormState extends State<ReportForm> {
                     onPressed: (int index) {
                       setState(() {
                         _priority = Priority.values[index];
-                        print("Priority set to: $_priority");
+                        // print("Priority set to: $_priority");
                       });
                     },
                     children: [

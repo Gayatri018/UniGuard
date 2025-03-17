@@ -45,7 +45,8 @@ class _ReportDetailsState extends State<ReportDetails> {
     // Open Google Maps with the location
     final String googleMapsUrl =
         "https://www.google.com/maps/search/?api=1&query=${_reportLocation.latitude},${_reportLocation.longitude}";
-    print("Navigating to: $googleMapsUrl"); // Debugging purpose
+    // print("Navigating to: $googleMapsUrl");
+    // Debugging purpose
   }
 
   @override

@@ -46,7 +46,7 @@ class _AddSpeakerFormState extends State<AddSpeakerForm> {
       await ref.putFile(_image!);
       return await ref.getDownloadURL();
     } catch (e) {
-      print("Error uploading image: $e");
+      // print("Error uploading image: $e");
       return null;
     }
   }
@@ -78,7 +78,7 @@ class _AddSpeakerFormState extends State<AddSpeakerForm> {
       });
 
     } catch (e) {
-      print("Error adding speaker: $e");
+      // print("Error adding speaker: $e");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error adding speaker')),
       );
