@@ -52,6 +52,7 @@ class _ReportDetailsState extends State<ReportDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFFBF4F4),
       appBar: AppBar(
         title: Text("Report Details"),
         centerTitle: true,
@@ -75,7 +76,7 @@ class _ReportDetailsState extends State<ReportDetails> {
             SizedBox(height: 10),
             Text("Status: $_status", style: TextStyle(fontWeight: FontWeight.bold)),
             SizedBox(height: 10),
-            Container(
+            SizedBox(
               height: 300,
               child: gm.GoogleMap(
                 initialCameraPosition: gm.CameraPosition(target: _reportLocation, zoom: 14),
@@ -87,6 +88,10 @@ class _ReportDetailsState extends State<ReportDetails> {
             SizedBox(height: 10),
             ElevatedButton(
               onPressed: _navigateToLocation,
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF8D0E02),
+                  foregroundColor: Colors.white
+              ),
               child: Text("Navigate to Location"),
             ),
             SizedBox(height: 10),
