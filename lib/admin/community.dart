@@ -88,7 +88,6 @@ class _AddSpeakerFormState extends State<AddSpeakerForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFBF4F4),
       appBar: AppBar(title: Text("Add Speaker")),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -110,71 +109,37 @@ class _AddSpeakerFormState extends State<AddSpeakerForm> {
                 ),
                 SizedBox(height: 10),
                 TextFormField(
-                  decoration: InputDecoration(labelText: "Name",
-                      floatingLabelStyle: TextStyle(
-                      color: Color(0xFF8D0E02),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF8D0E02))
-                    ),
-                  ),
+                  decoration: InputDecoration(labelText: "Name"),
                   validator: (value) => value!.isEmpty ? "Enter speaker name" : null,
                   onSaved: (value) => name = value!,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: "Designation",
-                    floatingLabelStyle: TextStyle(
-                      color: Color(0xFF8D0E02),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF8D0E02))
-                    ),
-                  ),
+                  decoration: InputDecoration(labelText: "Designation"),
                   validator: (value) => value!.isEmpty ? "Enter designation" : null,
                   onSaved: (value) => designation = value!,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: "Experience (years)",
-                    floatingLabelStyle: TextStyle(
-                      color: Color(0xFF8D0E02),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF8D0E02))
-                    ),
-                  ),
+                  decoration: InputDecoration(labelText: "Experience (years)"),
                   keyboardType: TextInputType.number,
                   validator: (value) => value!.isEmpty ? "Enter experience" : null,
                   onSaved: (value) => experience = value!,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: "About Speaker",
-                    floatingLabelStyle: TextStyle(
-                      color: Color(0xFF8D0E02),
-                    ),
-                  ),
+                  decoration: InputDecoration(labelText: "About Speaker"),
                   maxLines: 3,
                   validator: (value) => value!.isEmpty ? "Enter details" : null,
                   onSaved: (value) => about = value!,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: "Google Meet Link",
-                    floatingLabelStyle: TextStyle(
-                      color: Color(0xFF8D0E02),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF8D0E02))
-                    ),
-                  ),
+                  decoration: InputDecoration(labelText: "Google Meet Link"),
                   validator: (value) => value!.isEmpty ? "Enter Google Meet Link" : null,
                   onSaved: (value) => link = value!,
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: submitData,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF8D0E02)),
                   child: Text("Add Speaker"),
-                  ),
+                ),
               ],
             ),
           ),

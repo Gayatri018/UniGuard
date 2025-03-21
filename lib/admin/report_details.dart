@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as gm;
+import 'package:url_launcher/url_launcher.dart';
 
 class ReportDetails extends StatefulWidget {
   final String reportId;
@@ -27,7 +28,10 @@ class _ReportDetailsState extends State<ReportDetails> {
   }
 
   void _updateStatus(String newStatus) async {
-    await FirebaseFirestore.instance.collection('reports').doc(widget.reportId).update({
+    await FirebaseFirestore.instance
+        .collection('reports')
+        .doc(widget.reportId)
+        .update({
       'status': newStatus,
       'updated_time': FieldValue.serverTimestamp(),
     });
@@ -41,18 +45,22 @@ class _ReportDetailsState extends State<ReportDetails> {
     );
   }
 
-  void _navigateToLocation() {
+  Future<void> _navigateToLocation() async {
     // Open Google Maps with the location
     final String googleMapsUrl =
         "https://www.google.com/maps/search/?api=1&query=${_reportLocation.latitude},${_reportLocation.longitude}";
     // print("Navigating to: $googleMapsUrl");
     // Debugging purpose
+    if (await canLaunchUrl(Uri.parse(googleMapsUrl))) {
+      await launchUrl(Uri.parse(googleMapsUrl));
+    } else {
+      throw "Could not open Google Maps";
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFBF4F4),
       appBar: AppBar(
         title: Text("Report Details"),
         centerTitle: true,
@@ -63,53 +71,70 @@ class _ReportDetailsState extends State<ReportDetails> {
       ),
       body: Padding(
         padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Title: ${widget.reportData['title']}", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
-            Text("Description: ${widget.reportData['description']}"),
-            SizedBox(height: 10),
-            Text("Landmark: ${widget.reportData['landmark']}"),
-            SizedBox(height: 10),
-            Text("Priority: ${widget.reportData['priority']}"),
-            SizedBox(height: 10),
-            Text("Status: $_status", style: TextStyle(fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
-            SizedBox(
-              height: 300,
-              child: gm.GoogleMap(
-                initialCameraPosition: gm.CameraPosition(target: _reportLocation, zoom: 14),
-                markers: {
-                  gm.Marker(markerId: gm.MarkerId("reportLocation"), position: _reportLocation),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Title: ${widget.reportData['title']}",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              SizedBox(height: 15),
+              Text("Description: ${widget.reportData['description']}"),
+              SizedBox(height: 15),
+              Text("Landmark: ${widget.reportData['landmark']}"),
+              SizedBox(height: 15),
+              Text("Priority: ${widget.reportData['priority']}"),
+              SizedBox(height: 15),
+              Text("Status: $_status",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              SizedBox(height: 15),
+              Container(
+                height: 300,
+                decoration: BoxDecoration(
+                  color: Colors.white, // Background color
+                  border: Border.all(color: Color(0xFF8D0E02), width: 1),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Material(
+                    child: gm.GoogleMap(
+                      initialCameraPosition:
+                          gm.CameraPosition(target: _reportLocation, zoom: 14),
+                      markers: {
+                        gm.Marker(
+                            markerId: gm.MarkerId("reportLocation"),
+                            position: _reportLocation),
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _navigateToLocation,
+                child: Text("Navigate to Location"),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF8D0E02),
+                    foregroundColor: Colors.white),
+              ),
+              SizedBox(height: 20),
+              DropdownButton<String>(
+                value: _status,
+                items: ["pending", "resolved"].map((String status) {
+                  return DropdownMenuItem<String>(
+                    value: status,
+                    child: Text(status.toUpperCase()),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  if (newValue != null) {
+                    _updateStatus(newValue);
+                  }
                 },
               ),
-            ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: _navigateToLocation,
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF8D0E02),
-                  foregroundColor: Colors.white
-              ),
-              child: Text("Navigate to Location"),
-            ),
-            SizedBox(height: 10),
-            DropdownButton<String>(
-              value: _status,
-              items: ["pending", "resolved"].map((String status) {
-                return DropdownMenuItem<String>(
-                  value: status,
-                  child: Text(status.toUpperCase()),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                if (newValue != null) {
-                  _updateStatus(newValue);
-                }
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
