@@ -50,6 +50,7 @@ dependencies:
   smooth_page_indicator: ^1.2.1
   flutter_dotenv: ^5.2.1
   animated_text_kit: ^4.2.3
+  dash_chat_2: ^0.0.21
 
 
 dev_dependencies:
