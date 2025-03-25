@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
+import 'package:http/http.dart' as http;
 
 class Chatbot extends StatefulWidget {
   const Chatbot({super.key});
@@ -18,23 +21,45 @@ class _ChatbotState extends State<Chatbot> {
 
   ChatUser bot = ChatUser(
     id: "2",
-    firstName: "Bot",
+    firstName: "Gemini",
     profileImage: "assets/images/user.png",
   );
 
   getData(ChatMessage m)async {
+
+    final url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyBV_UOpeoKt4NSXb1s4TlTo-OSeZmRJv1k" ;
+    final header = {
+      'Content-Type' : 'application/json'
+    };
+
+    var data = {
+      "contents": [{
+        "parts":[{"text": m.text}]
+      }]
+    };
+
     _typing.add(bot);
     messages.insert(0, m);
     setState(() {});
-    await Future.delayed(const Duration(seconds: 2));
+    await http.post(Uri.parse(url), headers: header, body: jsonEncode(data))
+        .then((value) {
+          if(value.statusCode==200) {
+            var result = jsonDecode(value.body);
 
-    ChatMessage data = ChatMessage(
-        text: "Demo text",
-        user: user,
-        createdAt: DateTime.now()
-    );
+            ChatMessage m1 = ChatMessage(
+                text: result["candidates"][0]['content']['parts'][0]['text'],
+                user: bot,
+                createdAt: DateTime.now()
+            );
 
-    messages.insert(0, data);
+            messages.insert(0, m1);
+
+          } else {
+            print("error");
+          }
+    })
+        .catchError(( e ) {});
+
     _typing.remove(bot);
     setState(() {});
   }
@@ -46,7 +71,9 @@ class _ChatbotState extends State<Chatbot> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xFF8D0E02),
         title: const Text("Chatbot"),
+        foregroundColor: Colors.white,
       ),
       body: DashChat(
         typingUsers: _typing,
@@ -56,12 +83,17 @@ class _ChatbotState extends State<Chatbot> {
           getData(message);
         },
         inputOptions: InputOptions(
+
           alwaysShowSend: true,
-          cursorStyle: CursorStyle(color: Colors.black)
+          cursorStyle: CursorStyle(color: Color(0xFF8D0E02))
         ),
         messageOptions: MessageOptions(
-          currentUserContainerColor: Colors.black,
+          showCurrentUserAvatar: false,
+
+          currentUserTextColor: Colors.white,
+          currentUserContainerColor: Color(0xFF8D0E02),
         ),
+
       ),
     );
   }

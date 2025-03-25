@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:uniguard/chatbot/chatbot.dart';
 import 'package:uniguard/screens/read_blog.dart';
 import 'package:uniguard/screens/report_page.dart';
 // import 'package:uniguard/admin/community.dart';
@@ -73,6 +74,18 @@ class _LandingPageState extends State<LandingPage> {
             label: 'My Reports',
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color(0xFF8D0E02),
+        child: Icon(Icons.chat, color: Colors.white,),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Chatbot(),
+            ),
+          );
+        },
       ),
       appBar: AppBar(
         backgroundColor: Color(0xFF8D0E02),

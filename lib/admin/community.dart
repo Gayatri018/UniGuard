@@ -6,10 +6,6 @@ import 'package:image_picker/image_picker.dart';
 
 class AddSpeakerForm extends StatefulWidget {
 
-  final String token;
-
-  AddSpeakerForm({required this.token});
-
   @override
   _AddSpeakerFormState createState() => _AddSpeakerFormState();
 }
