@@ -48,28 +48,48 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Login to UniGuard'),
+        centerTitle: true,
+        backgroundColor: Color(0xFF8D0E02),
+        foregroundColor: Colors.white,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               'Enter Your Token to Login',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
             TextField(
               controller: _tokenController,
               decoration: InputDecoration(
+                floatingLabelStyle: TextStyle(color: Color(0xFF8D0E02)),
+                labelStyle: TextStyle(color: Color(0xFF8D0E02)),
                 labelText: 'Token',
-                border: OutlineInputBorder(),
+                hintText: 'Enter your token',
+                hintStyle: TextStyle(color: Color(0xFF8D0E02)),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(color: Color(0xFF8D0E02)),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(color: Color(0xFF8D0E02)),
+                ),
               ),
             ),
             SizedBox(height: 20),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF8D0E02),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50.0),
+                ),
+              ),
               onPressed: _loginWithToken,
-              child: Text('Login'),
+              child: Text('Login', style: TextStyle(color: Colors.white),),
             ),
           ],
         ),

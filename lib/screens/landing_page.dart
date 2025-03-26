@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uniguard/chatbot/chatbot.dart';
 import 'package:uniguard/screens/read_blog.dart';
 import 'package:uniguard/screens/report_page.dart';
@@ -39,6 +40,41 @@ class _LandingPageState extends State<LandingPage> {
       _currentIndex = index;
     });
   }
+
+  void _logout(BuildContext context) async {
+    bool? confirmLogout = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: const Text("Logout", style: TextStyle(color: Color(0xFF8D0E02)),),
+          content: const Text("Are you sure you want to logout?", style: TextStyle(color: Color(0xFF8D0E02)),),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false), // Cancel
+              child: const Text("Cancel", style: TextStyle(color: Color(0xFF8D0E02)),),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true), // Confirm
+              child: const Text("Logout", style: TextStyle(color: Color(0xFF8D0E02)),),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmLogout == true) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', false); // Mark user as logged out but keep token
+
+      Navigator.pushReplacementNamed(context, '/login'); // Navigate to login screen
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Logged out successfully!')),
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -93,44 +129,58 @@ class _LandingPageState extends State<LandingPage> {
         toolbarHeight: 90,
         automaticallyImplyLeading: false,
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const SizedBox(width: 20),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Welcome",
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Row(
-                  children: [
-                    SelectableText(
-                      widget.token,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.copy),
-                      onPressed: () {
-                        Clipboard.setData(ClipboardData(text: widget.token));
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Token copied to clipboard!')),
-                        );
-                      },
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    "Welcome",
+                    style: TextStyle(
+                      fontSize: 24,
                       color: Colors.white,
-                      iconSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                  Row(
+                    children: [
+                      SelectableText(
+                        widget.token.length > 20 // Limit length before truncating
+                            ? "${widget.token.substring(0, 20)}..." // Show first 10 chars + "..."
+                            : widget.token, // Show full token if it's short,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.copy),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: widget.token));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Token copied to clipboard!')),
+                          );
+                        },
+                        color: Colors.white,
+                        iconSize: 16,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () {
+                _logout(context); // Call your logout function
+              },
+              color: Colors.white,
+              iconSize: 30,
             ),
           ],
         ),

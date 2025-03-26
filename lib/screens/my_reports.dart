@@ -41,22 +41,6 @@ class _ViewReportsState extends State<ViewReports> {
       appBar: AppBar(title: Text("My Reports"), centerTitle: true),
       body: Column(
         children: [
-          SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                userToken ?? "Loading token...",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(width: 2),
-              IconButton(
-                icon: Icon(Icons.copy, size: 16,),
-                onPressed: _copyToClipboard,
-              ),
-            ],
-          ),
-          SizedBox(height: 20),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
