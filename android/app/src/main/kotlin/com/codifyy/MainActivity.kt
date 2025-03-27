@@ -1,4 +1,4 @@
-package com.gdg.example.uniguard
+package com.codifyy.uniguard
 
 import io.flutter.embedding.android.FlutterActivity
 
