@@ -1,5 +1,5 @@
 name: uniguard
-description: "A new Flutter project."
+description: "Uniguard is a Flutter-based mobile app designed as an anonymous reporting platform. It includes features 1) Anonymous Login/Signup, 2) Report Submission & Tracking, 3) Admin Features. 4) Counseling Sessions & Mental Health Resources "
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  uuid: ^3.0.4
+  uuid: ^4.5.1
   fluttertoast: ^8.0.9
   shared_preferences: ^2.0.11
 
@@ -42,7 +42,7 @@ dependencies:
   get: ^4.6.6
   cloud_firestore: ^5.6.2
   google_maps_flutter: ^2.5.0
-  geolocator: ^10.1.0
+  geolocator: ^13.0.3
   geocoding: ^2.1.0
   firebase_storage: ^12.4.2
   image_picker: ^1.1.2
