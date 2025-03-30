@@ -1,0 +1,2 @@
+D:/GDG25/Uniguard/android/app/.cxx/RelWithDebInfo/121u4c1p/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/GDG25/Uniguard/android/app/.cxx/RelWithDebInfo/121u4c1p/armeabi-v7a/CMakeFiles/rebuild_cache.dir
