@@ -36,7 +36,6 @@ build/
 android/key.properties
 
 # Android Studio & Gradle related
-android/.gradle/
 android/app/debug/
 android/app/profile/
 android/app/release/
