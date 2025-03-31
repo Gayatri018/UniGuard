@@ -23,13 +23,13 @@ class _ChatbotState extends State<Chatbot> {
   ChatUser user = ChatUser(
     id: "1",
     firstName: "User",
-    profileImage: "assets/images/user.png",
+    profileImage: "Icon(icons.person)",
   );
 
   ChatUser bot = ChatUser(
     id: "2",
     firstName: "Gemini",
-    profileImage: "assets/images/user.png",
+    profileImage: "assets/images/gemini.png",
   );
 
   getData(ChatMessage m)async {
