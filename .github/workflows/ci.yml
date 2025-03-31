@@ -26,7 +26,11 @@ jobs:
       - name: Create .env file
         run: echo "${{ secrets.ENV_FILE }}" > .env
       - name: Create properties file
-        run: echo "${{ secrets.LOCAL_PROPERTIES }}" > android/local.properties
+        run: |
+          echo "sdk.dir=C:\\Users\\runneradmin\\AppData\\Local\\Android\\sdk" > android/local.properties
+          echo "flutter.sdk=C:\\flutter" >> android/local.properties
+          echo "${{ secrets.LOCAL_PROPERTIES }}" > android/local.properties
+        shell: pwsh
       - name: Decode Keystore (Windows)
         run: |
           echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
