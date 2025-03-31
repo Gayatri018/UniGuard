@@ -23,6 +23,10 @@ jobs:
         with:
           channel: 'stable'
           architecture: x64
+      - name: Create .env file
+        run: echo "${{ secrets.ENV_FILE }}" > .env
+      - name: Create .env file
+        run: echo "${{ secrets.LOCAL_PROPERTIES }}" > android/local.properties
       - run: flutter pub get
       - run: flutter clean
       - run: flutter build apk --release --split-per-abi
