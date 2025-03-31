@@ -30,7 +30,7 @@ jobs:
           echo "sdk.dir=C:\\Users\\runneradmin\\AppData\\Local\\Android\\sdk" > android/local.properties
           echo "flutter.sdk=C:\\flutter" >> android/local.properties
           echo "${{ secrets.LOCAL_PROPERTIES }}" > android/local.properties
-        shell: pwsh
+        shell: bash
       - name: Verify local.properties Exists
         run: |
           echo "Checking local.properties content:"
@@ -44,6 +44,15 @@ jobs:
         run: |
           echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
         shell: bash
+
+      - name: Debug Project Structure
+        run: |
+          echo "Current Working Directory:"
+          pwd
+          echo "Project Structure:"
+          tree /F /A
+        shell: pwsh
+
 
       - name: Create Keystore Properties (Windows)
         run: |
