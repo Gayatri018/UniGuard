@@ -28,8 +28,6 @@ jobs:
       - name: Create .env file
         run: echo "${{ secrets.LOCAL_PROPERTIES }}" > android/local.properties
       - run: flutter pub get
-      - run: flutter clean
-      - run: gradle clean
       - run: flutter build apk --release --split-per-abi
       - name: Push to Releases
         uses: ncipollo/release-action@v1
