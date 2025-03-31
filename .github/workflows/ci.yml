@@ -27,17 +27,11 @@ jobs:
       - name: Create .env file
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
-      - name: create local properties 1
-        run: echo "flutter.sdk=C:\\flutter" >> android/local.properties
-        shell: bash
-
-      - name: create local properties 2
-        run: echo "sdk.dir=C:\\Users\\runneradmin\\AppData\\Local\\Android\\sdk" > android/local.properties
-        shell: bash
-
-      - name: Create properties file
-        run: echo "${{ secrets.LOCAL_PROPERTIES }}" > android/local.properties
-        shell: bash
+      - name: Write Multi-Line Secret to local.properties
+        run: |
+          $secret = "${{ secrets.LOCAL_PROPERTIES }}"
+          Set-Content -Path android/local.properties -Value $secret
+        shell: pwsh
 
       - name: Verify local.properties Exists
         run: |
