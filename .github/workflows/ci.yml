@@ -23,36 +23,32 @@ jobs:
         with:
           channel: 'stable'
           architecture: x64
+
       - name: Create .env file
         run: echo "${{ secrets.ENV_FILE }}" > .env
-      - name: Create properties file
-        run: |
-          echo "sdk.dir=C:\\Users\\runneradmin\\AppData\\Local\\Android\\sdk" > android/local.properties
-          echo "flutter.sdk=C:\\flutter" >> android/local.properties
-          echo "${{ secrets.LOCAL_PROPERTIES }}" > android/local.properties
+
+      - name: create local properties 1
+        run: echo "flutter.sdk=C:\\flutter" >> android/local.properties
         shell: bash
+
+      - name: create local properties 2
+        run: echo "sdk.dir=C:\\Users\\runneradmin\\AppData\\Local\\Android\\sdk" > android/local.properties
+        shell: bash
+
+      - name: Create properties file
+        run: echo "${{ secrets.LOCAL_PROPERTIES }}" > android/local.properties
+        shell: bash
+
       - name: Verify local.properties Exists
         run: |
           echo "Checking local.properties content:"
           cat android/local.properties
         shell: bash
-      - name: Check if Gradle Wrapper Exists
-        run: |
-          dir android
-        shell: pwsh
+
       - name: Decode Keystore (Windows)
         run: |
           echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
         shell: bash
-
-      - name: Debug Project Structure
-        run: |
-          echo "Current Working Directory:"
-          pwd
-          echo "Project Structure:"
-          tree /F /A
-        shell: pwsh
-
 
       - name: Create Keystore Properties (Windows)
         run: |
@@ -61,11 +57,13 @@ jobs:
           echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
           echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
         shell: bash
+
       - name: Clean Gradle
         run: |
           cd android
           .\gradlew.bat clean
         shell: pwsh
+
       - run: flutter pub get
       - run: flutter build apk --release --split-per-abi
       - name: Push to Releases
