@@ -42,7 +42,7 @@ jobs:
       - name: Clean Gradle
         run: |
           cd android
-          ./gradlew clean
+          gradlew.bat clean
       - run: flutter pub get
       - run: flutter build apk --release --split-per-abi
       - name: Push to Releases
