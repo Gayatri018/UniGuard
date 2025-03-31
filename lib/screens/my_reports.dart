@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:uniguard/screens/report_details.dart';
 
 class ViewReports extends StatefulWidget {
@@ -26,14 +26,6 @@ class _ViewReportsState extends State<ViewReports> {
     });
   }
 
-  void _copyToClipboard() {
-    if (userToken != null) {
-      Clipboard.setData(ClipboardData(text: userToken!));
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Token copied to clipboard")),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
