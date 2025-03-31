@@ -31,6 +31,15 @@ jobs:
           echo "flutter.sdk=C:\\flutter" >> android/local.properties
           echo "${{ secrets.LOCAL_PROPERTIES }}" > android/local.properties
         shell: pwsh
+      - name: Verify local.properties Exists
+        run: |
+          echo "Checking local.properties content:"
+          cat android/local.properties
+        shell: bash
+      - name: Check if Gradle Wrapper Exists
+        run: |
+          dir android
+        shell: pwsh
       - name: Decode Keystore (Windows)
         run: |
           echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
