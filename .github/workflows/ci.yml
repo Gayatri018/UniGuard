@@ -42,7 +42,7 @@ jobs:
       - name: Clean Gradle
         run: |
           cd android
-          ./gradlew.bat clean
+          gradlew.bat clean
         shell: pwsh
       - run: flutter pub get
       - run: flutter build apk --release --split-per-abi
