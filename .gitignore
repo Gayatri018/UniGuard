@@ -53,3 +53,4 @@ app.*.map.json
 # Keystore files (important for app signing)
 *.jks
 *.keystore
+keystore.b64

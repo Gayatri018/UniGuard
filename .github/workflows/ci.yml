@@ -25,8 +25,20 @@ jobs:
           architecture: x64
       - name: Create .env file
         run: echo "${{ secrets.ENV_FILE }}" > .env
-      - name: Create .env file
+      - name: Create properties file
         run: echo "${{ secrets.LOCAL_PROPERTIES }}" > android/local.properties
+      - name: Decode Keystore (Windows)
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
+        shell: bash
+
+      - name: Create Keystore Properties (Windows)
+        run: |
+          echo "storeFile=keystore.jks" > android/key.properties
+          echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
+          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
+        shell: bash
       - run: flutter pub get
       - run: flutter build apk --release --split-per-abi
       - name: Push to Releases
