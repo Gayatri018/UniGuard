@@ -32,8 +32,6 @@ jobs:
       - name: Verify Flutter Installation
         run: |
           where flutter
-          flutter --version
-          flutter doctor
         shell: pwsh
 
       - name: Set FLUTTER_HOME
