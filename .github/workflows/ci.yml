@@ -52,21 +52,10 @@ jobs:
           echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
         shell: bash
 
-      - name: Clean Gradle Cache (Windows)
-        run: |
-          Remove-Item -Recurse -Force "$env:USERPROFILE\.gradle\caches\*"
-          Remove-Item -Recurse -Force "$env:USERPROFILE\.gradle\wrapper\*"
-        shell: pwsh
-
-      - name: Reinstall Dependencies
+      - name: Build APK
         run: |
           flutter pub get
-          cd android
-          ./gradlew build --refresh-dependencies
-        shell: bash
-
-      - name: Build APK
-        run: flutter build apk --release --split-per-abi
+          flutter build apk --release --split-per-abi
 
       - name: Push to Releases
         uses: ncipollo/release-action@v1
