@@ -8,6 +8,7 @@ on:
       - main
       - master
       - develop
+
 name: "Build & Release"
 jobs:
   build:
@@ -29,21 +30,6 @@ jobs:
           channel: 'stable'
           architecture: x64
 
-      - name: Verify Flutter Installation
-        run: |
-          where flutter
-        shell: pwsh
-
-      - name: Set FLUTTER_HOME
-        run: echo "FLUTTER_HOME=$Env:LOCALAPPDATA\flutter" | Out-File -FilePath $Env:GITHUB_ENV -Append
-        shell: pwsh
-
-      - name: Repair Flutter Cache
-        run: flutter pub cache repair
-
-      - name: Get Flutter Dependencies
-        run: flutter pub get
-
       - name: Create .env file
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
@@ -52,12 +38,6 @@ jobs:
           $secret = "${{ secrets.LOCAL_PROPERTIES }}"
           Set-Content -Path android/local.properties -Value $secret
         shell: pwsh
-
-      - name: Verify local.properties Exists
-        run: |
-          echo "Checking local.properties content:"
-          cat android/local.properties
-        shell: bash
 
       - name: Decode Keystore (Windows)
         run: |
@@ -72,19 +52,18 @@ jobs:
           echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
         shell: bash
 
-      - name: Debug settings.gradle
-        run: cat android/settings.gradle
-        shell: bash
-
-      - name: Clean Flutter and Gradle
+      - name: Clean Gradle Cache (Windows)
         run: |
-          flutter clean
-          cd android
-          .\gradlew.bat clean
+          Remove-Item -Recurse -Force "$env:USERPROFILE\.gradle\caches\*"
+          Remove-Item -Recurse -Force "$env:USERPROFILE\.gradle\wrapper\*"
         shell: pwsh
 
-      - name: Get Dependencies Again (Just in Case)
-        run: flutter pub get
+      - name: Reinstall Dependencies
+        run: |
+          flutter pub get
+          cd android
+          ./gradlew build --refresh-dependencies
+        shell: bash
 
       - name: Build APK
         run: flutter build apk --release --split-per-abi
