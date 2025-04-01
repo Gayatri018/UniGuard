@@ -24,7 +24,7 @@ jobs:
           channel: 'stable'
           architecture: x64
 
-      - run: flutter pub get
+      - run: flutter clean
 
       - name: Create .env file
         run: echo "${{ secrets.ENV_FILE }}" > .env
