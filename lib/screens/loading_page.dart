@@ -1,5 +1,6 @@
 // screens/loading_page.dart
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'signup_page.dart';
 
 class LoadingPage extends StatelessWidget {
@@ -15,9 +16,18 @@ class LoadingPage extends StatelessWidget {
       );
     });
 
-    return Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+      child: Scaffold(
+        backgroundColor: Color(0xFFFBF4F4),
+        body: Center(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF8D0E02)),
+          ),
+        ),
       ),
     );
   }

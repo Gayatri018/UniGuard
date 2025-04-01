@@ -66,9 +66,13 @@ class SpeakerDetailsScreen extends StatelessWidget {
                                   );
                                 }
                               },
-                              child: Text(
-                                "Join Google Meet",
-                                style: TextStyle(color: Colors.white, decoration: TextDecoration.underline, decorationColor: Colors.white),
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: Text("Join the Meeting", style: TextStyle(color: Color(0xFF8D0E02), fontWeight: FontWeight.bold)),
                               ),
                             ),
                         ],

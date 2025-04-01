@@ -113,7 +113,7 @@ class _ReportDetailsState extends State<ReportDetails> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _navigateToLocation,
-                child: Text("Navigate to Location"),
+                child: Text("Open in Google Maps"),
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF8D0E02),
                     foregroundColor: Colors.white),

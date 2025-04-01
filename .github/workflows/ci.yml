@@ -30,10 +30,6 @@ jobs:
           channel: 'stable'
           architecture: x64
 
-      - name: Check Directory Structure
-        run: |
-          ls -R android/
-
       - name: Create .env file
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
@@ -59,6 +55,7 @@ jobs:
       - name: Build APK
         run: |
           flutter pub get
+          flutter pub run flutter_launcher_icons
           flutter build apk --release --split-per-abi
 
       - name: Push to Releases
