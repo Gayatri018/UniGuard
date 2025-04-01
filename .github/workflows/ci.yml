@@ -24,6 +24,8 @@ jobs:
           channel: 'stable'
           architecture: x64
 
+      - run: flutter pub get
+
       - name: Create .env file
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
@@ -57,7 +59,7 @@ jobs:
           cd android
           .\gradlew.bat clean
         shell: pwsh
-
+      - run: flutter clean
       - run: flutter pub get
       - run: flutter build apk --release --split-per-abi
       - name: Push to Releases
