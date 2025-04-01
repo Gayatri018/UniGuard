@@ -30,6 +30,10 @@ jobs:
           channel: 'stable'
           architecture: x64
 
+      - name: Check Directory Structure
+        run: |
+          ls -R android/
+
       - name: Create .env file
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
@@ -46,7 +50,7 @@ jobs:
 
       - name: Create Keystore Properties (Windows)
         run: |
-          echo "storeFile=android/app/keystore.jks" > android/key.properties
+          echo "storeFile=keystore.jks" > android/key.properties
           echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
           echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
           echo "keyPassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
