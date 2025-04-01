@@ -29,6 +29,10 @@ jobs:
       - run: flutter clean
       - run: flutter --version
 
+      - name: Set FLUTTER_HOME
+        run: echo "FLUTTER_HOME=$Env:LOCALAPPDATA\flutter" | Out-File -FilePath $Env:GITHUB_ENV -Append
+        shell: pwsh
+
       - name: Create .env file
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
