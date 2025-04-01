@@ -74,6 +74,10 @@ jobs:
           echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
         shell: bash
 
+      - name: Debug settings.gradle
+        run: cat android/settings.gradle
+        shell: bash
+
       - name: Clean Flutter and Gradle
         run: |
           flutter clean
