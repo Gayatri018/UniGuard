@@ -169,12 +169,28 @@ class _ReportFormState extends State<ReportForm> {
 
                   FilledButton(
                       style: ButtonStyle(backgroundColor: WidgetStateProperty.all(Color(0xFF8D0E02)),),
-                      onPressed: () {
+                      onPressed: () async {
                         if (_FormGlobalKey.currentState!.validate()) {
                           if (selectedLocation == null) {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: Text(
                                     "Please select a location on the map")));
+                            return;
+                          }
+
+                          // Check if the user has exceeded daily report limit
+                          bool canSubmit =
+                              await _dbservice.canSubmitReport(widget.token);
+                          if (!canSubmit) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Daily report limit reached ❌")));
+                            _title.clear();
+                            _description.clear();
+                            _landmark.clear();
+                            setState(() {
+                              selectedLocation = null; // Remove map marker
+                              _priority = Priority.low; // Reset priority
+                            });
                             return;
                           }
 
@@ -192,7 +208,7 @@ class _ReportFormState extends State<ReportForm> {
                               time: FieldValue.serverTimestamp());
 
                           try {
-                            _dbservice.report_submit(report);
+                            _dbservice.reportSubmit(report);
 
                             // Clear input fields after successful submission
                             _title.clear();
