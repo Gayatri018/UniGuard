@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:uniguard/admin/report_details.dart';
 // import 'package:uniguard/screens/report_page.dart';
 import 'package:uniguard/admin/community.dart';
+import 'package:uniguard/admin/resolved.dart';
 
 class ViewReports extends StatefulWidget {
   @override
@@ -21,6 +22,7 @@ class _ViewReportsState extends State<ViewReports> {
     super.initState();
     _pages.addAll([
       Reports(),
+      Resolved(),
       AddSpeakerForm(),
     ]);
   }
@@ -57,6 +59,11 @@ class _ViewReportsState extends State<ViewReports> {
             icon: Icon(Icons.home_outlined),
             activeIcon: Icon(Icons.home, color: Colors.white),
             label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.check),
+            activeIcon: Icon(Icons.check_circle, color: Colors.white),
+            label: 'Resolved Reports',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.messenger_outline_rounded),
@@ -157,7 +164,7 @@ class Reports extends StatelessWidget {
         ),
         Expanded(
           child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('reports').snapshots(),
+            stream: FirebaseFirestore.instance.collection('reports').where('status', isEqualTo: 'pending').snapshots(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
@@ -189,8 +196,10 @@ class Reports extends StatelessWidget {
               }
 
               return ListView(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(20),
                 children: [
+                  Text("Pending Reports", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                  SizedBox(height: 20,),
                   if (highPriority.isNotEmpty) _buildPrioritySection("🔴 High Priority", highPriority, context),
                   if (mediumPriority.isNotEmpty) _buildPrioritySection("🟠 Medium Priority", mediumPriority, context),
                   if (lowPriority.isNotEmpty) _buildPrioritySection("🟢 Low Priority", lowPriority, context),

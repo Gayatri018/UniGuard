@@ -84,61 +84,66 @@ class _AddSpeakerFormState extends State<AddSpeakerForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Add Speaker")),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: pickImage,
-                  child: _image == null
-                      ? Container(
-                          height: 150,
-                          width: 150,
-                          color: Colors.grey[300],
-                          child: Icon(Icons.camera_alt, size: 50),
-                        )
-                      : Image.file(_image!, height: 150, width: 150, fit: BoxFit.cover),
+        padding: const EdgeInsets.all(30.0),
+        child: Column(
+          children: [
+            Text("Add Speaker", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+            SizedBox(height: 20,),
+            Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: pickImage,
+                      child: _image == null
+                          ? Container(
+                        height: 150,
+                        width: 150,
+                        color: Colors.grey[300],
+                        child: Icon(Icons.camera_alt, size: 50),
+                      )
+                          : Image.file(_image!, height: 150, width: 150, fit: BoxFit.cover),
+                    ),
+                    SizedBox(height: 10),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "Name"),
+                      validator: (value) => value!.isEmpty ? "Enter speaker name" : null,
+                      onSaved: (value) => name = value!,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "Designation"),
+                      validator: (value) => value!.isEmpty ? "Enter designation" : null,
+                      onSaved: (value) => designation = value!,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "Experience (years)"),
+                      keyboardType: TextInputType.number,
+                      validator: (value) => value!.isEmpty ? "Enter experience" : null,
+                      onSaved: (value) => experience = value!,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "About Speaker"),
+                      maxLines: 3,
+                      validator: (value) => value!.isEmpty ? "Enter details" : null,
+                      onSaved: (value) => about = value!,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "Google Meet Link"),
+                      validator: (value) => value!.isEmpty ? "Enter Google Meet Link" : null,
+                      onSaved: (value) => link = value!,
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: submitData,
+                      child: Text("Add Speaker"),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 10),
-                TextFormField(
-                  decoration: InputDecoration(labelText: "Name"),
-                  validator: (value) => value!.isEmpty ? "Enter speaker name" : null,
-                  onSaved: (value) => name = value!,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: "Designation"),
-                  validator: (value) => value!.isEmpty ? "Enter designation" : null,
-                  onSaved: (value) => designation = value!,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: "Experience (years)"),
-                  keyboardType: TextInputType.number,
-                  validator: (value) => value!.isEmpty ? "Enter experience" : null,
-                  onSaved: (value) => experience = value!,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: "About Speaker"),
-                  maxLines: 3,
-                  validator: (value) => value!.isEmpty ? "Enter details" : null,
-                  onSaved: (value) => about = value!,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: "Google Meet Link"),
-                  validator: (value) => value!.isEmpty ? "Enter Google Meet Link" : null,
-                  onSaved: (value) => link = value!,
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: submitData,
-                  child: Text("Add Speaker"),
-                ),
-              ],
-            ),
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );
