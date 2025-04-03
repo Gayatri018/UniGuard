@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as gm;
 import 'package:url_launcher/url_launcher.dart';
 
+import 'discard_report.dart';
+
 class ReportDetails extends StatefulWidget {
   final String reportId;
   final Map<String, dynamic> reportData;
@@ -132,6 +134,18 @@ class _ReportDetailsState extends State<ReportDetails> {
                     _updateStatus(newValue);
                   }
                 },
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DiscardReportPage(reportId: widget.reportId),
+                    ),
+                  );
+                },
+                child: Text("Discard the Report"),
               ),
             ],
           ),

@@ -5,6 +5,8 @@ import 'package:uniguard/admin/report_details.dart';
 import 'package:uniguard/admin/community.dart';
 import 'package:uniguard/admin/resolved.dart';
 
+import 'discarded_reports.dart';
+
 class ViewReports extends StatefulWidget {
   @override
   State<ViewReports> createState() => _ViewReportsState();
@@ -24,6 +26,7 @@ class _ViewReportsState extends State<ViewReports> {
       Reports(),
       Resolved(),
       AddSpeakerForm(),
+      DiscardedReports(),
     ]);
   }
 
@@ -69,6 +72,11 @@ class _ViewReportsState extends State<ViewReports> {
             icon: Icon(Icons.messenger_outline_rounded),
             activeIcon: Icon(Icons.messenger, color: Colors.white),
             label: 'Community',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.delete_outline),
+            activeIcon: Icon(Icons.delete, color: Colors.white),
+            label: 'Discarded Reports',
           ),
         ],
       ),
