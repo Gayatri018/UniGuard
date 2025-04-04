@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uniguard/admin/report_details.dart';
-// import 'package:uniguard/screens/report_page.dart';
 import 'package:uniguard/admin/community.dart';
 import 'package:uniguard/admin/resolved.dart';
-
 import 'discarded_reports.dart';
 
 class ViewReports extends StatefulWidget {
@@ -13,10 +11,8 @@ class ViewReports extends StatefulWidget {
 }
 
 class _ViewReportsState extends State<ViewReports> {
-
   int _currentIndex = 0;
 
-  // List of pages corresponding to bottom navigation items
   final List<Widget> _pages = [];
 
   @override
@@ -85,91 +81,100 @@ class _ViewReportsState extends State<ViewReports> {
   }
 }
 
-// class Reports extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//      return Column(
-//        children: [
-//          Card(
-//            margin: EdgeInsets.all(20),
-//            color: Colors.grey[300],
-//            elevation: 3,
-//            child: Padding(
-//              padding: const EdgeInsets.all(20.0),
-//              child: Text(
-//                "Admins can review the details, update the status, and use Google Maps to locate the spot.",
-//                style: TextStyle(fontSize: 16),
-//              ),
-//            ),
-//          ),
-//          Expanded(
-//            child: StreamBuilder<QuerySnapshot>(
-//             stream: FirebaseFirestore.instance.collection('reports').snapshots(),
-//             builder: (context, snapshot) {
-//               if (snapshot.connectionState == ConnectionState.waiting) {
-//                 return Center(child: CircularProgressIndicator());
-//               }
-//               if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-//                 return Center(child: Text("No reports found."));
-//               }
-//
-//               var reports = snapshot.data!.docs;
-//
-//               return ListView.builder(
-//                 padding: EdgeInsets.all(10),
-//                 itemCount: reports.length,
-//                 itemBuilder: (context, index) {
-//                   var report = reports[index].data() as Map<String, dynamic>;
-//
-//                   return Column(
-//                     children: [
-//                       ListTile(
-//                         title: Text(report['title']),
-//                         subtitle: Text("Status: ${report['status']}"),
-//                         trailing: Icon(Icons.arrow_forward),
-//                         onTap: () {
-//                           Navigator.push(
-//                             context,
-//                             MaterialPageRoute(
-//                               builder: (context) => ReportDetails(
-//                                 reportId: reports[index].id,
-//                                 reportData: report,
-//                               ),
-//                             ),
-//                           );
-//                         },
-//                       ),
-//                       Divider(color: Color(0xFF8D0E02), thickness: 0.5,)
-//                     ],
-//                   );
-//                 },
-//               );
-//             },
-//                ),
-//          ),
-//        ],
-//      );
-//   }
-//
-// }
-
 class Reports extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Card(
-          margin: EdgeInsets.all(20),
-          color: Colors.grey[300],
-          elevation: 3,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text(
-              "Admins can review the details, update the status, and use Google Maps to locate the spot.",
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
+        // Summary Card for Report Counts
+        FutureBuilder<QuerySnapshot>(
+          future: FirebaseFirestore.instance.collection('reports').where('status', isEqualTo: 'discarded').get(),
+          builder: (context, discardedSnapshot) {
+            if (discardedSnapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+
+            int discardedCount = discardedSnapshot.data?.docs.length ?? 0;
+
+            return FutureBuilder<QuerySnapshot>(
+              future: FirebaseFirestore.instance.collection('reports').where('status', isEqualTo: 'resolved').get(),
+              builder: (context, resolvedSnapshot) {
+                if (resolvedSnapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+
+                int resolvedCount = resolvedSnapshot.data?.docs.length ?? 0;
+
+                return StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance.collection('reports').where('status', isEqualTo: 'pending').snapshots(),
+                  builder: (context, pendingSnapshot) {
+                    if (pendingSnapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+
+                    int highPriorityCount = 0;
+                    int mediumPriorityCount = 0;
+                    int lowPriorityCount = 0;
+
+                    for (var doc in pendingSnapshot.data!.docs) {
+                      var report = doc.data() as Map<String, dynamic>;
+                      switch (report['priority']) {
+                        case 'high':
+                          highPriorityCount++;
+                          break;
+                        case 'medium':
+                          mediumPriorityCount++;
+                          break;
+                        case 'low':
+                          lowPriorityCount++;
+                          break;
+                        default:
+                          break;
+                      }
+                    }
+
+                    return Card(
+                      margin: EdgeInsets.all(15),
+                      color: Colors.white,
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              "Admins can review the details, update the status, and use Google Maps to locate the spot.",
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                _buildSummaryTile("🔴 High", highPriorityCount),
+                                _buildSummaryTile("🟠 Medium", mediumPriorityCount),
+                                _buildSummaryTile("🟢 Low", lowPriorityCount),
+                              ],
+                            ),
+                            SizedBox(height: 15),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                _buildSummaryTile("✅ Resolved", resolvedCount),
+                                _buildSummaryTile("🗑️ Discarded", discardedCount),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            );
+          },
         ),
+
         Expanded(
           child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection('reports').where('status', isEqualTo: 'pending').snapshots(),
@@ -181,7 +186,6 @@ class Reports extends StatelessWidget {
                 return Center(child: Text("No reports found."));
               }
 
-              // 🔹 Categorizing reports by priority
               List<QueryDocumentSnapshot> lowPriority = [];
               List<QueryDocumentSnapshot> mediumPriority = [];
               List<QueryDocumentSnapshot> highPriority = [];
@@ -207,7 +211,7 @@ class Reports extends StatelessWidget {
                 padding: EdgeInsets.all(20),
                 children: [
                   Text("Pending Reports", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 20,),
+                  SizedBox(height: 20),
                   if (highPriority.isNotEmpty) _buildPrioritySection("🔴 High Priority", highPriority, context),
                   if (mediumPriority.isNotEmpty) _buildPrioritySection("🟠 Medium Priority", mediumPriority, context),
                   if (lowPriority.isNotEmpty) _buildPrioritySection("🟢 Low Priority", lowPriority, context),
@@ -216,6 +220,16 @@ class Reports extends StatelessWidget {
             },
           ),
         ),
+      ],
+    );
+  }
+
+  /// Builds a summary tile for the report count
+  Widget _buildSummaryTile(String label, int count) {
+    return Column(
+      children: [
+        Text(count.toString(), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
+        Text(label, style: TextStyle(fontSize: 14, color: Colors.black)),
       ],
     );
   }
@@ -230,26 +244,13 @@ class Reports extends StatelessWidget {
         SizedBox(height: 10),
         ...reports.map((reportDoc) {
           var report = reportDoc.data() as Map<String, dynamic>;
-          return Column(
-            children: [
-              ListTile(
-                title: Text(report['title']),
-                subtitle: Text("Status: ${report['status']}"),
-                trailing: Icon(Icons.arrow_forward),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ReportDetails(
-                        reportId: reportDoc.id,
-                        reportData: report,
-                      ),
-                    ),
-                  );
-                },
-              ),
-              Divider(color: Color(0xFF8D0E02), thickness: 0.5),
-            ],
+          return ListTile(
+            title: Text(report['title']),
+            subtitle: Text("Status: ${report['status']}"),
+            trailing: Icon(Icons.arrow_forward),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ReportDetails(reportId: reportDoc.id, reportData: report)));
+            },
           );
         }).toList(),
       ],

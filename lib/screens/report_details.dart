@@ -1,6 +1,7 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as gm;
+import 'package:intl/intl.dart';
 
 class ReportDetails extends StatefulWidget {
   final String reportId;
@@ -15,6 +16,21 @@ class ReportDetails extends StatefulWidget {
 class _ReportDetailsState extends State<ReportDetails> {
   late String _status;
   late gm.LatLng _reportLocation;
+
+  String formatTimestamp(dynamic timestamp) {
+    if (timestamp == null) return "N/A"; // Handle null values
+
+    DateTime dateTime;
+    if (timestamp is Timestamp) {
+      dateTime = timestamp.toDate(); // Convert Firestore Timestamp to DateTime
+    } else if (timestamp is String) {
+      dateTime = DateTime.tryParse(timestamp) ?? DateTime(2000, 1, 1);
+    } else {
+      return "Invalid Date";
+    }
+
+    return DateFormat('yyyy-MM-dd hh:mm a').format(dateTime); // Format the date
+  }
 
   @override
   void initState() {
@@ -73,6 +89,21 @@ class _ReportDetailsState extends State<ReportDetails> {
             SizedBox(height: 10),
             Text("Status: $_status", style: TextStyle(fontWeight: FontWeight.bold)),
             SizedBox(height: 10),
+            Text("Reported Time: ${formatTimestamp(widget.reportData['created_time'])}", style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: 10),
+            if (widget.reportData.containsKey('updated_time') && widget.reportData['updated_time'] != null)
+              Text("Updated Time: ${formatTimestamp(widget.reportData['updated_time'])}",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: 20,),
+            if (_status == "discarded" && widget.reportData.containsKey('discard_reason') && widget.reportData['discard_reason'] != null)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Reason for Discarding:", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red)),
+                  Text(widget.reportData['discard_reason'], style: TextStyle(color: Colors.red)),
+                  SizedBox(height: 10),
+                ],
+              ),
             Container(
               height: 300,
               child: gm.GoogleMap(
@@ -82,26 +113,6 @@ class _ReportDetailsState extends State<ReportDetails> {
                 },
               ),
             ),
-            // SizedBox(height: 10),
-            // ElevatedButton(
-            //   onPressed: _navigateToLocation,
-            //   child: Text("Navigate to Location"),
-            // ),
-            // SizedBox(height: 10),
-            // DropdownButton<String>(
-            //   value: _status,
-            //   items: ["pending", "resolved"].map((String status) {
-            //     return DropdownMenuItem<String>(
-            //       value: status,
-            //       child: Text(status.toUpperCase()),
-            //     );
-            //   }).toList(),
-            //   onChanged: (String? newValue) {
-            //     if (newValue != null) {
-            //       _updateStatus(newValue);
-            //     }
-            //   },
-            // ),
           ],
         ),
       ),

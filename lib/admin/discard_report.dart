@@ -54,18 +54,18 @@ class _DiscardReportPageState extends State<DiscardReportPage> {
               title: Text(reason),
               value: reason,
               groupValue: _selectedReason,
+              activeColor: Color(0xFF8D0E02),
               onChanged: (value) {
                 setState(() => _selectedReason = value);
               },
             )),
-
-            Spacer(),
-
-            // Submit Button
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-              onPressed: _submitDiscard,
-              child: Text("Confirm Discard"),
+            SizedBox(height: 30,),
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF8D0E02), foregroundColor: Colors.white),
+                onPressed: _submitDiscard,
+                child: Text("Confirm Discard"),
+              ),
             ),
           ],
         ),

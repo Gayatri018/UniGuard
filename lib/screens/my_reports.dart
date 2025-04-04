@@ -55,7 +55,14 @@ class _ViewReportsState extends State<ViewReports> {
 
                       return ListTile(
                         title: Text(report['title']),
-                        subtitle: Text("Status: ${report['status']}"),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Status: ${report['status']}"),
+                            if (report['status'] == 'discarded' && report.containsKey('discard_reason'))
+                              Text("Reason: ${report['discard_reason']}", style: TextStyle(color: Colors.red, fontStyle: FontStyle.italic)),
+                          ],
+                        ),
                         trailing: Icon(Icons.arrow_forward),
                         onTap: () {
                           Navigator.push(

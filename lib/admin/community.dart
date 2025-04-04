@@ -138,6 +138,10 @@ class _AddSpeakerFormState extends State<AddSpeakerForm> {
                     ElevatedButton(
                       onPressed: submitData,
                       child: Text("Add Speaker"),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF8D0E02),
+                        foregroundColor: Colors.white,
+                      ),
                     ),
                   ],
                 ),

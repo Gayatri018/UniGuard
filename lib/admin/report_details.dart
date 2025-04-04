@@ -121,31 +121,36 @@ class _ReportDetailsState extends State<ReportDetails> {
                     foregroundColor: Colors.white),
               ),
               SizedBox(height: 20),
-              DropdownButton<String>(
-                value: _status,
-                items: ["pending", "resolved"].map((String status) {
-                  return DropdownMenuItem<String>(
-                    value: status,
-                    child: Text(status.toUpperCase()),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  if (newValue != null) {
-                    _updateStatus(newValue);
-                  }
-                },
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DiscardReportPage(reportId: widget.reportId),
-                    ),
-                  );
-                },
-                child: Text("Discard the Report"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  DropdownButton<String>(
+                    value: _status,
+                    items: ["pending", "resolved"].map((String status) {
+                      return DropdownMenuItem<String>(
+                        value: status,
+                        child: Text(status.toUpperCase()),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      if (newValue != null) {
+                        _updateStatus(newValue);
+                      }
+                    },
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF8D0E02), foregroundColor: Colors.white),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DiscardReportPage(reportId: widget.reportId),
+                        ),
+                      );
+                    },
+                    child: Text("Discard the Report"),
+                  ),
+                ],
               ),
             ],
           ),
