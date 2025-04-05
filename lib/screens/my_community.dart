@@ -31,6 +31,7 @@ class SpeakerDetailsScreen extends StatelessWidget {
                 var designation = speaker['designation'] ?? 'No designation';
                 var experience = speaker['experience'] ?? '0';
                 var about = speaker['about'] ?? 'No details available';
+                var date_time = speaker['session_time'] ?? '';
                 var link = speaker['link'] ?? '';
 
                 return Card(
@@ -53,6 +54,8 @@ class SpeakerDetailsScreen extends StatelessWidget {
                           Text("Experience: $experience years", style: TextStyle(color: Colors.white),),
                           SizedBox(height: 5),
                           Text(about, style: TextStyle(color: Colors.white),),
+                          SizedBox(height: 10),
+                          Text(date_time, style: TextStyle(color: Colors.white),),
                           SizedBox(height: 10),
                           if (link.isNotEmpty)
                             GestureDetector(

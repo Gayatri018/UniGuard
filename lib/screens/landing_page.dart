@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uniguard/chatbot/chatbot.dart';
 import 'package:uniguard/screens/read_blog.dart';
 import 'package:uniguard/screens/report_page.dart';
 // import 'package:uniguard/admin/community.dart';
 // import '../admin/report_details.dart';
 import 'package:uniguard/screens/my_reports.dart';
+// import 'package:uniguard/screens/signup_page.dart';
+import 'package:uniguard/utils/token_manager.dart';
+import 'login_page.dart';
 import 'my_community.dart';
 
 class LandingPage extends StatefulWidget {
@@ -64,10 +67,11 @@ class _LandingPageState extends State<LandingPage> {
     );
 
     if (confirmLogout == true) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoggedIn', false); // Mark user as logged out but keep token
-
-      Navigator.pushReplacementNamed(context, '/login'); // Navigate to login screen
+      await TokenManager.clearToken();
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => LoginPage()), // replace with actual LoginPage widget
+            (Route<dynamic> route) => false,
+      );
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Logged out successfully!')),

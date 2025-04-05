@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uniguard/screens/signup_page.dart';
 import 'landing_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -73,6 +74,21 @@ class _LoginPageState extends State<LoginPage> {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                   borderSide: BorderSide(color: Color(0xFF8D0E02)),
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignUpPage()),
+                );
+              },
+              child: Text(
+                'Forgot your token? Create a new account',
+                style: TextStyle(
+                  color: Color(0xFF8D0E02),
+                  decoration: TextDecoration.none,
                 ),
               ),
             ),

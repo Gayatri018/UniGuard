@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uniguard/admin/view_reports.dart';
+// import 'package:uniguard/admin/view_reports.dart';
 import 'package:uuid/uuid.dart';
 import 'package:get/get.dart'; // Import GetX
+import '../admin/admin_login.dart';
 import 'landing_page.dart';
 import 'login_page.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -126,7 +127,7 @@ class AdminSplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 3), () {
-      Get.off(() => ViewReports()); // Navigate to ViewReports after splash
+      Get.off(() => AdminLoginPage()); // Navigate to ViewReports after splash
     });
 
     return Scaffold(

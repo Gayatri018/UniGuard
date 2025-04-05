@@ -1,13 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uniguard/admin/report_details.dart';
 import 'package:uniguard/admin/community.dart';
 import 'package:uniguard/admin/resolved.dart';
+import 'admin_login.dart';
 import 'discarded_reports.dart';
 
 class ViewReports extends StatefulWidget {
   @override
   State<ViewReports> createState() => _ViewReportsState();
+  final String adminEmail;
+  const ViewReports({Key? key, required this.adminEmail}) : super(key: key);
 }
 
 class _ViewReportsState extends State<ViewReports> {
@@ -40,10 +44,21 @@ class _ViewReportsState extends State<ViewReports> {
         foregroundColor: Colors.white,
         backgroundColor: Color(0xFF8D0E02),
         centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            tooltip: "Logout",
+            onPressed: () async {
+              // Firebase sign out
+              await FirebaseAuth.instance.signOut();
+              // Navigate back to admin login
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => AdminLoginPage()),
+                    (route) => false,
+              );
+            },
+          )
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Color(0xFF8D0E02),

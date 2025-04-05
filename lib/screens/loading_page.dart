@@ -1,19 +1,42 @@
 // screens/loading_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'signup_page.dart';
+import 'package:uniguard/screens/login_page.dart';
+import '../utils/token_manager.dart';
+import 'landing_page.dart';
+// import 'signup_page.dart';
 
-class LoadingPage extends StatelessWidget {
+class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});
 
   @override
+  State<LoadingPage> createState() => _LoadingPageState();
+}
+
+class _LoadingPageState extends State<LoadingPage> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // Simulate a loading process before navigating to the sign-up page
-    Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => SignUpPage()),
-      );
+    Future.delayed(Duration(seconds: 2), () async {
+      bool loggedIn = await TokenManager.isLoggedIn();
+      String? token = await TokenManager.getToken();
+
+      if (loggedIn && token != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LandingPage(token: token)),
+        );
+      } else {
+        Navigator.pushReplacement(
+         context,
+         MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      }
     });
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
