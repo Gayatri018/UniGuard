@@ -52,36 +52,56 @@ UniGuard supports several **UN Sustainable Development Goals**, especially in pr
 ---
 
 ## 📸 Snapshots
+<p align="center">
+  <img src="Snapshots/1.png" width="200"/>
+  <img src="Snapshots/2.png" width="200"/>
+  <img src="Snapshots/3.png" width="200"/>
+</p>
+<p align="center">
+  <img src="Snapshots/4.png" width="200"/>
+  <img src="Snapshots/5.png" width="200"/>
+  <img src="Snapshots/6.png" width="200"/>
+</p>
+<p align="center">
+  <img src="Snapshots/7.png" width="200"/>
+  <img src="Snapshots/8.png" width="200"/>
+  <img src="Snapshots/9.png" width="200"/>
+</p>
+<p align="center">
+  <img src="Snapshots/10.png" width="200"/>
+  <img src="Snapshots/11.png" width="200"/>
+  <img src="Snapshots/12.png" width="200"/>
+</p>
+<p align="center">
+  <img src="Snapshots/13.png" width="200"/>
+  <img src="Snapshots/14.png" width="200"/>
+  <img src="Snapshots/15.png" width="200"/>
+</p>
+<p align="center">
+  <img src="Snapshots/16.png" width="200"/>
+  <img src="Snapshots/17.png" width="200"/>
+  <img src="Snapshots/18.png" width="200"/>
+</p>
+<p align="center">
+  <img src="Snapshots/19.png" width="200"/>
+  <img src="Snapshots/20.png" width="200"/>
+  <img src="Snapshots/21.png" width="200"/>
+</p>
+<p align="center">
+  <img src="Snapshots/22.png" width="200"/>
+  <img src="Snapshots/23.png" width="200"/>
+  <img src="Snapshots/24.png" width="200"/>
+</p>
+<p align="center">
+  <img src="Snapshots/25.png" width="200"/>
+  <img src="Snapshots/26.png" width="200"/>
+  <img src="Snapshots/27.png" width="200"/>
+</p>
+<p align="center">
+  <img src="Snapshots/28.png" width="200"/>
+  <img src="Snapshots/29.png" width="200"/>
+</p>
 
-![1.png](Snapshots/1.png)
-![2.png](Snapshots/2.png)
-![3.png](Snapshots/3.png)
-![5.png](Snapshots/5.png)
-![4.png](Snapshots/4.png)
-![6.png](Snapshots/6.png)
-![8.png](Snapshots/8.png)
-![7.png](Snapshots/7.png)
-![9.png](Snapshots/9.png)
-![10.png](Snapshots/10.png)
-![11.png](Snapshots/11.png)
-![12.png](Snapshots/12.png)
-![13.png](Snapshots/13.png)
-![14.png](Snapshots/14.png)
-![16.png](Snapshots/16.png)
-![15.png](Snapshots/15.png)
-![17.png](Snapshots/17.png)
-![18.png](Snapshots/18.png)
-![19.png](Snapshots/19.png)
-![20.png](Snapshots/20.png)
-![21.png](Snapshots/21.png)
-![23.png](Snapshots/23.png)
-![22.png](Snapshots/22.png)
-![24.png](Snapshots/24.png)
-![25.png](Snapshots/25.png)
-![26.png](Snapshots/26.png)
-![27.png](Snapshots/27.png)
-![28.png](Snapshots/28.png)
-![29.png](Snapshots/29.png)
 ---
 
 ## 📁 Repository Links
