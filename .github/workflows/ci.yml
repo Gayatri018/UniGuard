@@ -56,7 +56,7 @@ jobs:
         run: |
           flutter pub get
           flutter pub run flutter_launcher_icons
-          flutter build apk --release --split-per-abi
+          flutter build apk --release
 
       - name: Push to Releases
         uses: ncipollo/release-action@v1
