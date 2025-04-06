@@ -45,7 +45,7 @@ class _ReportFormState extends State<ReportForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFFBF4F4),
-        appBar: AppBar(title: Text("Report Form"), centerTitle: true, backgroundColor: Color(0xFFFBF4F4),),
+        appBar: AppBar(title: Text("Report Form"), centerTitle: true, backgroundColor: Color(0xFFFBF4F4), automaticallyImplyLeading: false,),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(20),
           child: Form(

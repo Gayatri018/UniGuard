@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uniguard/screens/signup_page.dart';
+import 'package:uniguard/utils/token_manager.dart';
 import 'landing_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,10 +16,10 @@ class _LoginPageState extends State<LoginPage> {
     String enteredToken = _tokenController.text.trim();
     if (enteredToken.isNotEmpty) {
       // Fetch the token from SharedPreferences
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? storedToken = prefs.getString('unique_token');
+      String? storedToken = await TokenManager.getToken();
 
       if (storedToken != null && storedToken == enteredToken) {
+        await TokenManager.saveToken(enteredToken);
         // If tokens match, navigate to LandingPage
         Navigator.pushReplacement(
           context,

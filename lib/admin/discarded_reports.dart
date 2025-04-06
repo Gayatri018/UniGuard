@@ -6,7 +6,7 @@ class DiscardedReports extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Discarded Reports")),
+      appBar: AppBar(title: Text("Discarded Reports"), automaticallyImplyLeading: false,),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('reports')

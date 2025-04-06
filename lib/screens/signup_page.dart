@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:uniguard/admin/view_reports.dart';
 import 'package:uuid/uuid.dart';
 import 'package:get/get.dart'; // Import GetX
 import '../admin/admin_login.dart';
+import '../utils/token_manager.dart';
 import 'landing_page.dart';
 import 'login_page.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -31,8 +32,7 @@ class _SignUpPageState extends State<SignUpPage> {
         var uuid = Uuid();
         String token = uuid.v4();
 
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('unique_token', token);
+        await TokenManager.saveToken(token); // instead of using SharedPreferences directly
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Anonymous Login Successful')),

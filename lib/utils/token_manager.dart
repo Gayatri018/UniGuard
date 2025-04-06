@@ -24,7 +24,7 @@ class TokenManager {
   // Clear the saved token (if needed)
   static Future<void> clearToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('user_token');
+    // prefs.remove('user_token');
     await prefs.setBool('isLoggedIn', false);
   }
 }

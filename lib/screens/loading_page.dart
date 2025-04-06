@@ -26,6 +26,9 @@ class _LoadingPageState extends State<LoadingPage> {
     bool loggedIn = await TokenManager.isLoggedIn();
     String? token = await TokenManager.getToken();
 
+    print('loggedIn: $loggedIn');
+    print('token: $token');
+
     if (loggedIn && token != null) {
       Navigator.pushReplacement(
         context,

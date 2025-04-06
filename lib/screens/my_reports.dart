@@ -30,7 +30,7 @@ class _ViewReportsState extends State<ViewReports> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("My Reports"), centerTitle: true),
+      appBar: AppBar(title: Text("My Reports"), centerTitle: true, automaticallyImplyLeading: false,),
       body: Column(
         children: [
           Expanded(

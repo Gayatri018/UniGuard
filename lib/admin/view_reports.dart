@@ -44,6 +44,7 @@ class _ViewReportsState extends State<ViewReports> {
         foregroundColor: Colors.white,
         backgroundColor: Color(0xFF8D0E02),
         centerTitle: true,
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             icon: Icon(Icons.logout),

@@ -57,6 +57,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
       appBar: AppBar(
         title: Text('Admin Login'),
         centerTitle: true,
+        automaticallyImplyLeading: true,
         backgroundColor: Color(0xFF8D0E02),
         foregroundColor: Colors.white,
       ),
