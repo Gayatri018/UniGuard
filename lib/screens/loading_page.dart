@@ -14,31 +14,33 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage> {
-
   @override
   void initState() {
     super.initState();
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    await Future.delayed(Duration(seconds: 2));  // Optional splash delay
+
+    bool loggedIn = await TokenManager.isLoggedIn();
+    String? token = await TokenManager.getToken();
+
+    if (loggedIn && token != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LandingPage(token: token)),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 2), () async {
-      bool loggedIn = await TokenManager.isLoggedIn();
-      String? token = await TokenManager.getToken();
-
-      if (loggedIn && token != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => LandingPage(token: token)),
-        );
-      } else {
-        Navigator.pushReplacement(
-         context,
-         MaterialPageRoute(builder: (context) => LoginPage()),
-        );
-      }
-    });
-
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -55,3 +57,4 @@ class _LoadingPageState extends State<LoadingPage> {
     );
   }
 }
+
