@@ -53,8 +53,35 @@ UniGuard supports several **UN Sustainable Development Goals**, especially in pr
 
 ## 📸 Snapshots
 
-_(Include screenshots or GIFs of app screens here, such as login, report form, map view, etc.)_
-
+![1.png](Snapshots/1.png)
+![2.png](Snapshots/2.png)
+![3.png](Snapshots/3.png)
+![5.png](Snapshots/5.png)
+![4.png](Snapshots/4.png)
+![6.png](Snapshots/6.png)
+![8.png](Snapshots/8.png)
+![7.png](Snapshots/7.png)
+![9.png](Snapshots/9.png)
+![10.png](Snapshots/10.png)
+![11.png](Snapshots/11.png)
+![12.png](Snapshots/12.png)
+![13.png](Snapshots/13.png)
+![14.png](Snapshots/14.png)
+![16.png](Snapshots/16.png)
+![15.png](Snapshots/15.png)
+![17.png](Snapshots/17.png)
+![18.png](Snapshots/18.png)
+![19.png](Snapshots/19.png)
+![20.png](Snapshots/20.png)
+![21.png](Snapshots/21.png)
+![23.png](Snapshots/23.png)
+![22.png](Snapshots/22.png)
+![24.png](Snapshots/24.png)
+![25.png](Snapshots/25.png)
+![26.png](Snapshots/26.png)
+![27.png](Snapshots/27.png)
+![28.png](Snapshots/28.png)
+![29.png](Snapshots/29.png)
 ---
 
 ## 📁 Repository Links
@@ -65,19 +92,9 @@ _(Include screenshots or GIFs of app screens here, such as login, report form, m
 
 ---
 
-## 🔄 Process Flow
-
-_(Insert the process flow diagram image if available)_
-
-## 🧱 Architecture
-
-_(Insert the system architecture diagram image if available)_
-
----
-
 ## 👥 Team Codifyy
 
-- **Team Leader:** Krishna Kothawale
+- **Team Members:** [Gayatri Deshmukh](https://github.com/Gayatri018) and [Krishna Kothawale](https://github.com/KrishnaKothawale)
 - Built with ❤️ by passionate developers for a safer campus.
 
 ---
