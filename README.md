@@ -10,6 +10,7 @@
 - ✅ **Smart AI Support** (Gemini AI Chatbot)
 - ✅ **Access to Mental Health Resources**
 - ✅ **One-Click Counseling Booking via Google Meet**
+- 🛡️ **Hidden Admin Login (5-Tap Easter Egg)**
 
 ---
 
@@ -29,6 +30,24 @@ Stay informed with real-time updates and auto-generated safety recommendations.
 
 💬 **Support at Fingertips**  
 Access mental health self-help resources or book a Google Meet counseling session directly through the app.
+
+---
+
+## 🔑 Admin Easter Egg Login
+
+An Easter Egg Admin Panel is hidden inside the app!
+Tap five times on the login screen title to reveal a secure email/password login page meant for administrators.
+
+🔐 Used to access advanced moderation tools (e.g., viewing all reports, discarding fake content, updating status).
+
+🔒 Credentials required are stored securely and not exposed publicly.
+
+🛡️ Ensures student data remains protected while enabling safe internal moderation.
+
+> email : test@abc.com
+> password : 123456
+
+🔒 Credentials for admin login.
 
 ---
 

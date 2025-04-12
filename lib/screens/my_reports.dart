@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:flutter/services.dart';
 import 'package:uniguard/screens/report_details.dart';
 
+import '../utils/token_manager.dart';
+
 class ViewReports extends StatefulWidget {
   @override
   _ViewReportsState createState() => _ViewReportsState();
@@ -19,8 +21,7 @@ class _ViewReportsState extends State<ViewReports> {
   }
 
   Future<void> _loadUserToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('unique_token');
+    String? token = await TokenManager.getToken();
     setState(() {
       userToken = token ?? 'No token found';
     });

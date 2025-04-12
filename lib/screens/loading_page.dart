@@ -1,4 +1,7 @@
 // screens/loading_page.dart
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uniguard/screens/login_page.dart';
@@ -22,6 +25,23 @@ class _LoadingPageState extends State<LoadingPage> {
 
   Future<void> _checkLoginStatus() async {
     await Future.delayed(Duration(seconds: 2));  // Optional splash delay
+
+    User? firebaseUser = FirebaseAuth.instance.currentUser;
+    log("Existing Firebase user: ${firebaseUser?.uid}");
+
+    // If no user is signed in, sign in anonymously
+    if (firebaseUser == null) {
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance.signInAnonymously();
+        firebaseUser = userCredential.user;
+        print("Signed in anonymously: ${firebaseUser?.uid}");
+      } catch (e) {
+        print("Failed to sign in anonymously: $e");
+      }
+    } else {
+      print("Existing Firebase user: ${firebaseUser.uid}");
+    }
+    //CSrhp6EJciPerLIgisZT4lEBneN2
 
     bool loggedIn = await TokenManager.isLoggedIn();
     String? token = await TokenManager.getToken();
